@@ -369,6 +369,71 @@
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
         }
 
+        .project-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .project-image.no-screenshot {
+            cursor: default;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .placeholder-content {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .placeholder-content i {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+        }
+
+        .placeholder-content p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-image:not(.no-screenshot) img {
+            transform: scale(1.1);
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(37, 99, 235, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-overlay i {
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
         .project-content {
             padding: 1.5rem;
         }
@@ -399,6 +464,167 @@
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--secondary-color);
+        }
+
+        .project-note {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #fef3c7;
+            border-left: 3px solid #f59e0b;
+            border-radius: 4px;
+            display: flex;
+            align-items: start;
+            gap: 0.5rem;
+        }
+
+        .project-note i {
+            color: #f59e0b;
+            margin-top: 2px;
+        }
+
+        .project-note small {
+            color: #92400e;
+            line-height: 1.5;
+        }
+
+        /* Modal/Lightbox */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            display: block;
+            max-width: 90%;
+            max-height: 85%;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: var(--white);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 10000;
+        }
+
+        .modal-close:hover {
+            color: #ccc;
+        }
+
+        .modal-caption {
+            text-align: center;
+            color: var(--white);
+            padding: 1rem;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+        }
+
+        /* Gallery Modal */
+        .gallery-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            overflow-y: auto;
+        }
+
+        .gallery-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .gallery-header {
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .gallery-close {
+            position: fixed;
+            top: 20px;
+            right: 40px;
+            color: var(--white);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10001;
         }
 
         /* Skills Section */
@@ -738,27 +964,122 @@
     <!-- Projects Section -->
     <section id="projects">
         <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">Some of my notable academic and professional projects</p>
+        <p class="section-subtitle">Some of my notable professional and academic projects</p>
         
         <div class="projects-grid">
+            <!-- ERP Platform -->
             <div class="project-card">
+                <div class="project-image no-screenshot">
+                    <div class="placeholder-content">
+                        <i class="fas fa-briefcase"></i>
+                        <p>Enterprise ERP System</p>
+                    </div>
+                </div>
                 <div class="project-content">
-                    <h3 class="project-title">Vaccination Platform</h3>
-                    <p class="project-description">A comprehensive vaccination platform integrating all parties involved in the vaccination process. Features include automatic certificate generation and live detection for high-order security.</p>
+                    <h3 class="project-title">ERP Platform</h3>
+                    <p class="project-description">Enterprise-grade dashboard-based ERP system with role-based access control and dynamic dashboards. Optimized for performance and enterprise scalability.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">React.js</span>
+                        <span class="tech-tag">Redux Toolkit</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- E-Learning Platform -->
+            <div class="project-card">
+                <div class="project-image" onclick="openModal('images/fastuz-1.jpg', 'Fastuz E-Learning Platform')">
+                    <img src="images/fastuz-1.jpg" alt="Fastuz E-Learning">
+                    <div class="project-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">E-Learning Platform (Fastuz)</h3>
+                    <p class="project-description">Full-featured e-learning platform with Click-to-Pay payments, SSL encryption, and certification via 2D-DOC QR codes. Built with comprehensive testing suite.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Next.js</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">Express</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="http://fastuz.com/" target="_blank" class="project-link" title="Note: SSL certificate pending renewal">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="#" onclick="showGallery('fastuz'); return false;" class="project-link">
+                            <i class="fas fa-images"></i> View Gallery
+                        </a>
+                    </div>
+                    <div class="project-note">
+                        <i class="fas fa-info-circle"></i> <small>Note: Platform is live and functional. SSL certificate renewal is pending on the hosting side.</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education Management -->
+            <div class="project-card">
+                <div class="project-image" onclick="openModal('images/hub-2.jpg', 'Fastuz Hub Dashboard')">
+                    <img src="images/hub-2.jpg" alt="Fastuz Hub">
+                    <div class="project-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Education Management (Fastuz-Hub)</h3>
+                    <p class="project-description">Real-time education management platform with JWT authentication and engagement-boosting voucher system.</p>
                     <div class="project-tech">
                         <span class="tech-tag">React.js</span>
                         <span class="tech-tag">Redux</span>
                         <span class="tech-tag">Node.js</span>
                         <span class="tech-tag">MongoDB</span>
-                        <span class="tech-tag">Bootstrap</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="http://fastuz-hub.com/" target="_blank" class="project-link" title="Note: SSL certificate pending renewal">
+                            <i class="fas fa-external-link-alt"></i> View Live
+                        </a>
+                        <a href="#" onclick="showGallery('fastuz-hub'); return false;" class="project-link">
+                            <i class="fas fa-images"></i> View Gallery
+                        </a>
+                    </div>
+                    <div class="project-note">
+                        <i class="fas fa-info-circle"></i> <small>Note: Platform is live and functional. SSL certificate renewal is pending on the hosting side.</small>
                     </div>
                 </div>
             </div>
 
+            <!-- Vaccination Platform -->
             <div class="project-card">
+                <div class="project-image" onclick="openModal('vaccination-modal')">
+                    <img src="images/vaccination-platform.jpg" alt="Vaccination Platform" onerror="this.src='https://via.placeholder.com/400x250/10b981/ffffff?text=Vaccination+Platform'">
+                    <div class="project-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Vaccination Platform</h3>
+                    <p class="project-description">Comprehensive vaccination platform with automatic certificate generation and live detection for high-order security.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">React.js</span>
+                        <span class="tech-tag">Redux</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Management -->
+            <div class="project-card">
+                <div class="project-image" onclick="openModal('student-modal')">
+                    <img src="images/student-management.jpg" alt="Student Management" onerror="this.src='https://via.placeholder.com/400x250/764ba2/ffffff?text=Student+Management'">
+                    <div class="project-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Student Management Platform</h3>
-                    <p class="project-description">Comprehensive student management system built with the MEAN stack, featuring profile management, grade viewing, and academic performance tracking with secure authentication.</p>
+                    <p class="project-description">MEAN stack management system with profile management, grade viewing, and academic performance tracking.</p>
                     <div class="project-tech">
                         <span class="tech-tag">MongoDB</span>
                         <span class="tech-tag">Express</span>
@@ -768,10 +1089,17 @@
                 </div>
             </div>
 
+            <!-- Project Management -->
             <div class="project-card">
+                <div class="project-image" onclick="openModal('project-mgmt-modal')">
+                    <img src="images/project-management.jpg" alt="Project Management" onerror="this.src='https://via.placeholder.com/400x250/667eea/ffffff?text=Project+Management'">
+                    <div class="project-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Project Management Platform</h3>
-                    <p class="project-description">Web application for student supervision and end-of-study project management with separate interfaces for students, supervisors, and administrators.</p>
+                    <p class="project-description">Web application for student supervision and end-of-study project management with role-based interfaces.</p>
                     <div class="project-tech">
                         <span class="tech-tag">Java EE</span>
                         <span class="tech-tag">Hibernate</span>
@@ -780,20 +1108,26 @@
                     </div>
                 </div>
             </div>
-
-            <div class="project-card">
-                <div class="project-content">
-                    <h3 class="project-title">Health Forum</h3>
-                    <p class="project-description">Interactive health forum where users can ask questions about health conditions and share their inquiries with the community.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Django</span>
-                        <span class="tech-tag">MySQL</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
+
+    <!-- Modal for Image Lightbox -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="modalCaption"></div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="gallery-modal">
+        <span class="gallery-close" onclick="closeGallery()">&times;</span>
+        <div class="gallery-content">
+            <div class="gallery-header">
+                <h2 id="galleryTitle"></h2>
+            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </div>
+    </div>
 
     <!-- Skills Section -->
     <section id="skills">
@@ -910,11 +1244,106 @@
     </footer>
 
     <script>
+        // Gallery data
+        const galleries = {
+            'fastuz': {
+                title: 'Fastuz E-Learning Platform',
+                images: [
+                    { src: 'images/fastuz-1.jpg', caption: 'Home Page' },
+                    { src: 'images/fastuz-2.jpg', caption: 'Welcome & Mission' },
+                    { src: 'images/fastuz-3.jpg', caption: 'Course Categories' },
+                    { src: 'images/fastuz-4.jpg', caption: 'Community Testimonials' }
+                ]
+            },
+            'fastuz-hub': {
+                title: 'Fastuz-Hub Education Management',
+                images: [
+                    { src: 'images/hub-1.jpg', caption: 'Login Interface' },
+                    { src: 'images/hub-2.jpg', caption: 'Admin Dashboard' },
+                    { src: 'images/hub-3.jpg', caption: 'Analytics & Reports' }
+                ]
+            }
+        };
+
         // Mobile menu toggle
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
             navLinks.classList.toggle('active');
         }
+
+        // Modal/Lightbox functions
+        function openModal(imageSrc, caption) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            modal.style.display = 'block';
+            modalImg.src = imageSrc;
+            modalCaption.textContent = caption || '';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Gallery functions
+        function showGallery(projectKey) {
+            const gallery = galleries[projectKey];
+            if (!gallery) return;
+
+            const modal = document.getElementById('galleryModal');
+            const title = document.getElementById('galleryTitle');
+            const grid = document.getElementById('galleryGrid');
+
+            title.textContent = gallery.title;
+            grid.innerHTML = '';
+
+            gallery.images.forEach(img => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.onclick = () => openModal(img.src, img.caption);
+                
+                const image = document.createElement('img');
+                image.src = img.src;
+                image.alt = img.caption;
+                
+                item.appendChild(image);
+                grid.appendChild(item);
+            });
+
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGallery() {
+            const modal = document.getElementById('galleryModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const imageModal = document.getElementById('imageModal');
+            const galleryModal = document.getElementById('galleryModal');
+            
+            if (event.target === imageModal) {
+                closeModal();
+            }
+            if (event.target === galleryModal) {
+                closeGallery();
+            }
+        }
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+                closeGallery();
+            }
+        });
 
         // Smooth scroll and close mobile menu
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
