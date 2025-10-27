@@ -969,10 +969,10 @@
         <div class="projects-grid">
             <!-- ERP Platform -->
             <div class="project-card">
-                <div class="project-image no-screenshot">
-                    <div class="placeholder-content">
-                        <i class="fas fa-briefcase"></i>
-                        <p>Enterprise ERP System</p>
+                <div class="project-image" onclick="openModal('images/erp-1.jpg', 'ERP Dashboard')">
+                    <img src="images/erp-1.jpg" alt="ERP Dashboard">
+                    <div class="project-overlay">
+                        <i class="fas fa-search-plus"></i>
                     </div>
                 </div>
                 <div class="project-content">
@@ -984,6 +984,11 @@
                         <span class="tech-tag">Redux Toolkit</span>
                         <span class="tech-tag">Node.js</span>
                         <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" onclick="showGallery('erp'); return false;" class="project-link">
+                            <i class="fas fa-images"></i> View Gallery
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1054,8 +1059,8 @@
 
             <!-- Vaccination Platform -->
             <div class="project-card">
-                <div class="project-image" onclick="openModal('vaccination-modal')">
-                    <img src="images/vaccination-platform.jpg" alt="Vaccination Platform" onerror="this.src='https://via.placeholder.com/400x250/10b981/ffffff?text=Vaccination+Platform'">
+                <div class="project-image" onclick="openModal('images/vaccination-1.jpg', 'Vaccination Platform')">
+                    <img src="images/vaccination-1.jpg" alt="Vaccination Platform">
                     <div class="project-overlay">
                         <i class="fas fa-search-plus"></i>
                     </div>
@@ -1068,6 +1073,11 @@
                         <span class="tech-tag">Redux</span>
                         <span class="tech-tag">Node.js</span>
                         <span class="tech-tag">MongoDB</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" onclick="showGallery('vaccination'); return false;" class="project-link">
+                            <i class="fas fa-images"></i> View Gallery
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1264,6 +1274,23 @@
                     { src: 'images/hub-1.jpg', caption: 'Login Interface' },
                     { src: 'images/hub-2.jpg', caption: 'Admin Dashboard' },
                     { src: 'images/hub-3.jpg', caption: 'Analytics & Reports' }
+                ]
+            },
+            'vaccination': {
+                title: 'Vaccination Platform',
+                images: [
+                    { src: 'images/vaccination-1.jpg', caption: 'Platform Overview' },
+                    { src: 'images/vaccination-2.jpg', caption: 'Certificate Generation' },
+                    { src: 'images/vaccination-3.jpg', caption: 'Live Detection' },
+                    { src: 'images/vaccination-4.jpg', caption: 'User Dashboard' }
+                ]
+            },
+            'erp': {
+                title: 'ERP Platform',
+                images: [
+                    { src: 'images/erp-1.jpg', caption: 'Dashboard Overview' },
+                    { src: 'images/erp-2.jpg', caption: 'Role Management' },
+                    { src: 'images/erp-3.jpg', caption: 'Analytics & Reports' }
                 ]
             }
         };
