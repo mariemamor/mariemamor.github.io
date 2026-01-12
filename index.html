@@ -1,1429 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mariem Amor - Full Stack Engineer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --text-dark: #1f2937;
-            --text-light: #6b7280;
-            --bg-light: #f9fafb;
-            --white: #ffffff;
-            --accent: #10b981;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            padding: 0.5rem 0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--white);
-            padding-top: 80px;
-        }
-
-        .hero-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero-content .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .hero-content p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.8;
-            animation: fadeInUp 1s ease 0.4s both;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            animation: fadeInUp 1s ease 0.6s both;
-        }
-
-        .btn {
-            padding: 0.875rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: var(--white);
-            color: var(--primary-color);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-outline {
-            border: 2px solid var(--white);
-            color: var(--white);
-        }
-
-        .btn-outline:hover {
-            background: var(--white);
-            color: var(--primary-color);
-        }
-
-        .hero-image {
-            text-align: center;
-            animation: fadeIn 1s ease 0.8s both;
-        }
-
-        .profile-pic {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            object-fit: cover;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Section Styles */
-        section {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--primary-color);
-            margin: 1rem auto;
-            border-radius: 2px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
-
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text p {
-            margin-bottom: 1rem;
-            line-height: 1.8;
-            color: var(--text-light);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 1.5rem;
-            background: var(--bg-light);
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .stat-label {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        /* Experience Section */
-        .experience-item {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--primary-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .experience-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .exp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-        }
-
-        .exp-title {
-            font-size: 1.5rem;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .exp-company {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-
-        .exp-date {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        .exp-content h4 {
-            color: var(--text-dark);
-            margin: 1rem 0 0.5rem 0;
-        }
-
-        .exp-content ul {
-            list-style: none;
-            margin-left: 1rem;
-        }
-
-        .exp-content li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-        }
-
-        .exp-content li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .impact-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .impact-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .impact-icon {
-            color: var(--accent);
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .project-image {
-            position: relative;
-            height: 200px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .project-image.no-screenshot {
-            cursor: default;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .placeholder-content {
-            text-align: center;
-            color: var(--white);
-        }
-
-        .placeholder-content i {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            opacity: 0.8;
-        }
-
-        .placeholder-content p {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .project-card:hover .project-image:not(.no-screenshot) img {
-            transform: scale(1.1);
-        }
-
-        .project-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(37, 99, 235, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .project-overlay i {
-            font-size: 2rem;
-            color: var(--white);
-        }
-
-        .project-card:hover .project-overlay {
-            opacity: 1;
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-title {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .project-description {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tech-tag {
-            padding: 0.25rem 0.75rem;
-            background: var(--bg-light);
-            color: var(--primary-color);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .project-link:hover {
-            color: var(--secondary-color);
-        }
-
-        .project-note {
-            margin-top: 1rem;
-            padding: 0.75rem;
-            background: #fef3c7;
-            border-left: 3px solid #f59e0b;
-            border-radius: 4px;
-            display: flex;
-            align-items: start;
-            gap: 0.5rem;
-        }
-
-        .project-note i {
-            color: #f59e0b;
-            margin-top: 2px;
-        }
-
-        .project-note small {
-            color: #92400e;
-            line-height: 1.5;
-        }
-
-        /* Modal/Lightbox */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal-content {
-            display: block;
-            max-width: 90%;
-            max-height: 85%;
-            margin: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 8px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            color: var(--white);
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            z-index: 10000;
-        }
-
-        .modal-close:hover {
-            color: #ccc;
-        }
-
-        .modal-caption {
-            text-align: center;
-            color: var(--white);
-            padding: 1rem;
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.2rem;
-        }
-
-        /* Gallery Modal */
-        .gallery-modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            overflow-y: auto;
-        }
-
-        .gallery-content {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-        }
-
-        .gallery-header {
-            color: var(--white);
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .gallery-header h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .gallery-item {
-            cursor: pointer;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.05);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .gallery-close {
-            position: fixed;
-            top: 20px;
-            right: 40px;
-            color: var(--white);
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 10001;
-        }
-
-        /* Skills Section */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-category {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-        }
-
-        .skill-category h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .skill-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-item {
-            padding: 0.5rem 1rem;
-            background: var(--bg-light);
-            border-radius: 8px;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            transition: all 0.3s ease;
-        }
-
-        .skill-item:hover {
-            background: var(--primary-color);
-            color: var(--white);
-            transform: scale(1.05);
-        }
-
-        /* Contact Section */
-        .contact-section {
-            background: var(--bg-light);
-        }
-
-        .contact-container {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: var(--white);
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateX(10px);
-        }
-
-        .contact-icon {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-        }
-
-        .contact-link {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--primary-color);
-            color: var(--white);
-            border-radius: 50%;
-            text-decoration: none;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-
-        .social-link:hover {
-            transform: translateY(-5px);
-            background: var(--secondary-color);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--text-dark);
-            color: var(--white);
-            text-align: center;
-            padding: 2rem;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                position: fixed;
-                left: -100%;
-                top: 70px;
-                flex-direction: column;
-                background: var(--white);
-                width: 100%;
-                text-align: center;
-                transition: left 0.3s ease;
-                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-                padding: 2rem 0;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .exp-header {
-                flex-direction: column;
-            }
-
-            .impact-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mariem Amor – Full Stack Engineer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary:#2563eb;--secondary:#1e40af;--dark:#1f2937;--light:#6b7280;--bg:#f9fafb;--white:#fff;--accent:#10b981}
+    body{font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;color:var(--dark)}
+    html{scroll-behavior:smooth}
+
+    /* NAV */
+    nav{position:fixed;top:0;width:100%;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);box-shadow:0 2px 10px rgba(0,0,0,.08);z-index:1000}
+    .nav-container{max-width:1200px;margin:auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+    .logo{font-weight:700;font-size:1.5rem;color:var(--primary)}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--dark);font-weight:500}
+
+    /* HERO */
+    .hero{min-height:100vh;padding-top:90px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;display:flex;align-items:center}
+    .hero-container{max-width:1200px;margin:auto;padding:2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .hero h1{font-size:3.2rem}
+    .subtitle{font-size:1.4rem;opacity:.9;margin:1rem 0}
+    .hero p{opacity:.9;margin-bottom:2rem}
+    .btn{padding:.8rem 1.8rem;border-radius:8px;text-decoration:none;font-weight:600;display:inline-flex;gap:.5rem}
+    .btn-primary{background:#fff;color:var(--primary)}
+    .btn-outline{border:2px solid #fff;color:#fff}
+    .profile-pic{width:280px;height:280px;border-radius:50%;object-fit:cover;border:4px solid rgba(255,255,255,.3)}
+
+    section{padding:5rem 2rem;max-width:1200px;margin:auto}
+    .section-title{text-align:center;font-size:2.4rem;margin-bottom:1rem}
+    .section-subtitle{text-align:center;color:var(--light);margin-bottom:3rem}
+
+    /* ABOUT */
+    .about-content{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+    .about-text p{margin-bottom:1rem;color:var(--light)}
+
+    /* EXPERIENCE */
+    .experience-item{background:#fff;padding:2rem;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,.08);border-left:4px solid var(--primary)}
+    .exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+    .exp-title{font-size:1.4rem;font-weight:600}
+    .exp-company{color:var(--primary)}
+    .exp-date{color:var(--light)}
+    .exp-content ul{list-style:none;margin-top:1rem}
+    .exp-content li{padding-left:1.5rem;position:relative;margin-bottom:.6rem;color:var(--light)}
+    .exp-content li::before{content:'▹';position:absolute;left:0;color:var(--primary)}
+
+    /* PROJECTS */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem}
+    .project-card{background:#fff;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,.08);padding:1.5rem}
+    .project-title{font-size:1.3rem;margin-bottom:.5rem}
+    .project-tech{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+    .tech-tag{background:var(--bg);color:var(--primary);padding:.3rem .8rem;border-radius:20px;font-size:.85rem}
+
+    /* SKILLS */
+    .skills-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem}
+    .skill-category{background:#fff;padding:2rem;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,.08)}
+    .skill-category h3{color:var(--primary);margin-bottom:1rem}
+    .skill-list{display:flex;flex-wrap:wrap;gap:.5rem}
+    .skill-item{background:var(--bg);padding:.5rem .9rem;border-radius:8px;font-size:.9rem}
+
+    /* CONTACT */
+    .contact-section{background:var(--bg)}
+    footer{background:var(--dark);color:#fff;text-align:center;padding:2rem}
+
+    @media(max-width:768px){.hero-container,.about-content{grid-template-columns:1fr;text-align:center}}
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <div class="logo">MA</div>
-            <div class="mobile-menu" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1>Mariem Amor</h1>
-                <p class="subtitle">Full Stack Engineer</p>
-                <p>Passionate about building scalable applications with modern technologies. Specialized in React, Node.js, and cloud solutions.</p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">
-                        <i class="fas fa-envelope"></i> Get In Touch
-                    </a>
-                    <a href="https://www.linkedin.com/in/mariem-amor/" target="_blank" class="btn btn-outline">
-                        <i class="fab fa-linkedin"></i> LinkedIn
-                    </a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="mariem.jpeg" alt="Mariem Amor" class="profile-pic">
-            </div>
-        </div>
-    </section>
+<nav>
+  <div class="nav-container">
+    <div class="logo">MA</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
 
-    <!-- About Section -->
-    <section id="about">
-        <h2 class="section-title">About Me</h2>
-        <p class="section-subtitle">Get to know more about my background and expertise</p>
-        <div class="about-content">
-            <div class="about-text">
-                <p>I am a passionate Full Stack Engineer with hands-on experience building scalable applications. I enjoy turning complex problems into efficient solutions using React.js, Node.js, Python, and cloud technologies like AWS.</p>
-                <p>I thrive in Agile teams, take ownership of projects from development to deployment, and am committed to delivering high-quality, maintainable code that meets business goals.</p>
-                <p>With a strong foundation in both frontend and backend development, I bring a comprehensive approach to software engineering. My experience spans from building enterprise ERP systems to developing e-learning platforms with advanced features.</p>
-            </div>
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">3+</div>
-                    <div class="stat-label">Years Experience</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">10+</div>
-                    <div class="stat-label">Projects Completed</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">15+</div>
-                    <div class="stat-label">Technologies</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience">
-        <h2 class="section-title">Experience</h2>
-        <p class="section-subtitle">My professional journey and accomplishments</p>
-        
-        <div class="experience-item">
-            <div class="exp-header">
-                <div>
-                    <h3 class="exp-title">Full Stack Engineer</h3>
-                    <p class="exp-company">Logimes, Tunis</p>
-                </div>
-                <div class="exp-date">Jan 2023 – Present</div>
-            </div>
-            
-            <div class="exp-content">
-                <h4>ERP Platform</h4>
-                <ul>
-                    <li>Engineered a dashboard-based ERP system using React.js, Redux Toolkit, Node.js, and PostgreSQL</li>
-                    <li>Implemented role-based access control (RBAC) with dynamic dashboards</li>
-                    <li>Optimized performance and ensured enterprise scalability</li>
-                </ul>
-
-                <h4>E-Learning Platform (Fastuz)</h4>
-                <ul>
-                    <li>Developed with Next.js, Node.js, MongoDB, and Express</li>
-                    <li>Integrated Click-to-Pay payments and SSL encryption</li>
-                    <li>Implemented certification via 2D-DOC QR codes</li>
-                    <li>Ensured robustness with unit testing using Jest and Mocha</li>
-                </ul>
-
-                <h4>Education Management Platform (Fastuz-Hub)</h4>
-                <ul>
-                    <li>Built with React.js, Redux, Node.js, Express.js, and MongoDB</li>
-                    <li>Implemented JWT authentication/authorization and real-time dashboards</li>
-                    <li>Added voucher system to improve user engagement</li>
-                </ul>
-
-                <h4>Deployment & DevOps</h4>
-                <ul>
-                    <li>Containerized applications with Docker and deployed on AWS (EC2, S3, IAM)</li>
-                    <li>Automated releases with CI/CD pipelines using GitHub Actions and CircleCI</li>
-                    <li>Ensured reliability with audits, monitoring, and backups</li>
-                </ul>
-
-                <div class="impact-stats">
-                    <div class="impact-item">
-                        <i class="fas fa-check-circle impact-icon"></i>
-                        <span>Increased test coverage by 50%</span>
-                    </div>
-                    <div class="impact-item">
-                        <i class="fas fa-check-circle impact-icon"></i>
-                        <span>Reduced deployment time by 40%</span>
-                    </div>
-                    <div class="impact-item">
-                        <i class="fas fa-check-circle impact-icon"></i>
-                        <span>Optimized query response by 35%</span>
-                    </div>
-                    <div class="impact-item">
-                        <i class="fas fa-check-circle impact-icon"></i>
-                        <span>Boosted Lighthouse score to 95+</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">Some of my notable professional and academic projects</p>
-        
-        <div class="projects-grid">
-            <!-- ERP Platform -->
-            <div class="project-card">
-                <div class="project-image" onclick="openModal('images/erp-1.jpg', 'ERP Dashboard')">
-                    <img src="images/erp-1.jpg" alt="ERP Dashboard">
-                    <div class="project-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">ERP Platform</h3>
-                    <p class="project-description">Enterprise-grade dashboard-based ERP system with role-based access control and dynamic dashboards. Optimized for performance and enterprise scalability.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React.js</span>
-                        <span class="tech-tag">TypeScript</span>
-                        <span class="tech-tag">Redux Toolkit</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" onclick="showGallery('erp'); return false;" class="project-link">
-                            <i class="fas fa-images"></i> View Gallery
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- E-Learning Platform -->
-            <div class="project-card">
-                <div class="project-image" onclick="openModal('images/fastuz-1.jpg', 'Fastuz E-Learning Platform')">
-                    <img src="images/fastuz-1.jpg" alt="Fastuz E-Learning">
-                    <div class="project-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">E-Learning Platform (Fastuz)</h3>
-                    <p class="project-description">Full-featured e-learning platform with Click-to-Pay payments, SSL encryption, and certification via 2D-DOC QR codes. Built with comprehensive testing suite.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Next.js</span>
-                        <span class="tech-tag">TypeScript</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">MongoDB</span>
-                        <span class="tech-tag">Express</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="http://fastuz.com/" target="_blank" class="project-link" title="Note: SSL certificate pending renewal">
-                            <i class="fas fa-external-link-alt"></i> View Live
-                        </a>
-                        <a href="#" onclick="showGallery('fastuz'); return false;" class="project-link">
-                            <i class="fas fa-images"></i> View Gallery
-                        </a>
-                    </div>
-                    <div class="project-note">
-                        <i class="fas fa-info-circle"></i> <small>Note: Platform is live and functional. SSL certificate renewal is pending on the hosting side.</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Education Management -->
-            <div class="project-card">
-                <div class="project-image" onclick="openModal('images/hub-2.jpg', 'Fastuz Hub Dashboard')">
-                    <img src="images/hub-2.jpg" alt="Fastuz Hub">
-                    <div class="project-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Education Management (Fastuz-Hub)</h3>
-                    <p class="project-description">Real-time education management platform with JWT authentication and engagement-boosting voucher system.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React.js</span>
-                        <span class="tech-tag">TypeScript</span>
-                        <span class="tech-tag">Redux</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">MongoDB</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="http://fastuz-hub.com/" target="_blank" class="project-link" title="Note: SSL certificate pending renewal">
-                            <i class="fas fa-external-link-alt"></i> View Live
-                        </a>
-                        <a href="#" onclick="showGallery('fastuz-hub'); return false;" class="project-link">
-                            <i class="fas fa-images"></i> View Gallery
-                        </a>
-                    </div>
-                    <div class="project-note">
-                        <i class="fas fa-info-circle"></i> <small>Note: Platform is live and functional. SSL certificate renewal is pending on the hosting side.</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Vaccination Platform -->
-            <div class="project-card">
-                <div class="project-image" onclick="openModal('images/vaccination-1.jpg', 'Vaccination Platform')">
-                    <img src="images/vaccination-1.jpg" alt="Vaccination Platform">
-                    <div class="project-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Vaccination Platform</h3>
-                    <p class="project-description">Comprehensive vaccination platform with automatic certificate generation and live detection for high-order security.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React.js</span>
-                        <span class="tech-tag">Redux</span>
-                        <span class="tech-tag">Node.js</span>
-                        <span class="tech-tag">MongoDB</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" onclick="showGallery('vaccination'); return false;" class="project-link">
-                            <i class="fas fa-images"></i> View Gallery
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Student Management -->
-            <div class="project-card">
-                <div class="project-image" onclick="openModal('student-modal')">
-                    <img src="images/student-management.jpg" alt="Student Management" onerror="this.src='https://via.placeholder.com/400x250/764ba2/ffffff?text=Student+Management'">
-                    <div class="project-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Student Management Platform</h3>
-                    <p class="project-description">MEAN stack management system with profile management, grade viewing, and academic performance tracking.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">MongoDB</span>
-                        <span class="tech-tag">Express</span>
-                        <span class="tech-tag">Angular</span>
-                        <span class="tech-tag">Node.js</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project Management -->
-            <div class="project-card">
-                <div class="project-image" onclick="openModal('project-mgmt-modal')">
-                    <img src="images/project-management.jpg" alt="Project Management" onerror="this.src='https://via.placeholder.com/400x250/667eea/ffffff?text=Project+Management'">
-                    <div class="project-overlay">
-                        <i class="fas fa-search-plus"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">Project Management Platform</h3>
-                    <p class="project-description">Web application for student supervision and end-of-study project management with role-based interfaces.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Java EE</span>
-                        <span class="tech-tag">Hibernate</span>
-                        <span class="tech-tag">Spring</span>
-                        <span class="tech-tag">MySQL</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal for Image Lightbox -->
-    <div id="imageModal" class="modal">
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="modalImage">
-        <div class="modal-caption" id="modalCaption"></div>
+<section class="hero" id="home">
+  <div class="hero-container">
+    <div>
+      <h1>Mariem Amor</h1>
+      <p class="subtitle">Full Stack Engineer</p>
+      <p>Full Stack Engineer with production experience building and operating cloud‑native SaaS platforms. Strong focus on backend systems, API design, and AWS‑based deployments using Docker and Terraform.</p>
+      <a class="btn btn-primary" href="#contact"><i class="fas fa-envelope"></i> Get in touch</a>
     </div>
+    <img src="mariem.jpeg" alt="Mariem Amor" class="profile-pic" />
+  </div>
+</section>
 
-    <!-- Gallery Modal -->
-    <div id="galleryModal" class="gallery-modal">
-        <span class="gallery-close" onclick="closeGallery()">&times;</span>
-        <div class="gallery-content">
-            <div class="gallery-header">
-                <h2 id="galleryTitle"></h2>
-            </div>
-            <div class="gallery-grid" id="galleryGrid"></div>
-        </div>
+<section id="about">
+  <h2 class="section-title">About Me</h2>
+  <p class="section-subtitle">Background & professional focus</p>
+  <div class="about-content">
+    <div class="about-text">
+      <p>I am a Full Stack Engineer with over 2 years of professional experience building and operating multi‑tenant SaaS platforms, including enterprise ERP systems and e‑learning products.</p>
+      <p>My work combines full‑stack development with real production ownership. I build backend services and APIs using TypeScript and Node.js, develop user‑facing applications with React and Next.js, and deploy systems in AWS‑based cloud environments.</p>
+      <p>I enjoy working close to the product, collaborating with non‑technical stakeholders, and ensuring the systems I build are reliable, scalable, and observable in production.</p>
     </div>
+  </div>
+</section>
 
-    <!-- Skills Section -->
-    <section id="skills">
-        <h2 class="section-title">Technical Skills</h2>
-        <p class="section-subtitle">Technologies and tools I work with</p>
-        
-        <div class="skills-container">
-            <div class="skill-category">
-                <h3><i class="fas fa-laptop-code"></i> Frontend</h3>
-                <div class="skill-list">
-                    <span class="skill-item">React.js</span>
-                    <span class="skill-item">Next.js</span>
-                    <span class="skill-item">Redux Toolkit</span>
-                    <span class="skill-item">TypeScript</span>
-                    <span class="skill-item">JavaScript</span>
-                    <span class="skill-item">Tailwind CSS</span>
-                    <span class="skill-item">Material UI</span>
-                    <span class="skill-item">HTML5</span>
-                    <span class="skill-item">CSS3</span>
-                </div>
-            </div>
+<section id="experience">
+  <h2 class="section-title">Experience</h2>
+  <p class="section-subtitle">Professional experience & responsibilities</p>
+  <div class="experience-item">
+    <div class="exp-header">
+      <div>
+        <div class="exp-title">Full Stack Engineer</div>
+        <div class="exp-company">Logimes, Tunis</div>
+      </div>
+      <div class="exp-date">Jan 2023 – Present</div>
+    </div>
+    <div class="exp-content">
+      <ul>
+        <li>Built and maintained full‑stack features for multi‑tenant SaaS platforms (ERP and e‑learning systems) using React, Next.js, TypeScript, Node.js, and Express.</li>
+        <li>Designed and maintained RESTful APIs supporting authentication, role‑based access control, and core business workflows.</li>
+        <li>Containerized backend services with Docker and deployed them on AWS Fargate for scalable production workloads.</li>
+        <li>Managed cloud infrastructure using Terraform, including ECS/Fargate services, IAM roles, networking components, and S3 storage.</li>
+        <li>Implemented CI/CD pipelines with GitHub Actions to automate build, test, and deployment processes.</li>
+        <li>Designed event‑driven workflows using AWS Step Functions and Lambda for asynchronous background tasks.</li>
+        <li>Implemented monitoring and alerting using AWS CloudWatch and SNS, with notifications sent to Slack.</li>
+        <li>Defined S3 lifecycle policies using Terraform, transitioning data between Standard and Intelligent‑Tiering storage classes to optimize costs.</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-            <div class="skill-category">
-                <h3><i class="fas fa-server"></i> Backend</h3>
-                <div class="skill-list">
-                    <span class="skill-item">Node.js</span>
-                    <span class="skill-item">Express.js</span>
-                    <span class="skill-item">REST APIs</span>
-                    <span class="skill-item">GraphQL</span>
-                    <span class="skill-item">Python</span>
-                    <span class="skill-item">Java/JEE</span>
-                </div>
-            </div>
+<section id="projects">
+  <h2 class="section-title">Projects</h2>
+  <p class="section-subtitle">Key professional platforms</p>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-title">Enterprise ERP Platform</div>
+      <p>Multi‑tenant ERP platform with role‑based dashboards and scalable backend services.</p>
+      <div class="project-tech">
+        <span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Node.js</span><span class="tech-tag">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-title">Fastuz – E‑Learning Platform</div>
+      <p>Cloud‑based e‑learning system with payments, certification workflows, and asynchronous processing.</p>
+      <div class="project-tech">
+        <span class="tech-tag">Next.js</span><span class="tech-tag">Node.js</span><span class="tech-tag">MongoDB</span><span class="tech-tag">AWS</span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-title">Fastuz Hub</div>
+      <p>Administration platform for educational institutions with real‑time dashboards and secure authentication.</p>
+      <div class="project-tech">
+        <span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Node.js</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <div class="skill-category">
-                <h3><i class="fas fa-database"></i> Databases</h3>
-                <div class="skill-list">
-                    <span class="skill-item">MongoDB</span>
-                    <span class="skill-item">PostgreSQL</span>
-                    <span class="skill-item">MySQL</span>
-                    <span class="skill-item">Oracle</span>
-                    <span class="skill-item">Snowflake</span>
-                    <span class="skill-item">Redis</span>
-                </div>
-            </div>
+<section id="skills">
+  <h2 class="section-title">Technical Skills</h2>
+  <p class="section-subtitle">Technologies I work with</p>
+  <div class="skills-container">
+    <div class="skill-category"><h3>Frontend</h3><div class="skill-list"><span class="skill-item">React</span><span class="skill-item">Next.js</span><span class="skill-item">TypeScript</span><span class="skill-item">Redux</span></div></div>
+    <div class="skill-category"><h3>Backend</h3><div class="skill-list"><span class="skill-item">Node.js</span><span class="skill-item">Express</span><span class="skill-item">REST APIs</span><span class="skill-item">Java</span></div></div>
+    <div class="skill-category"><h3>Databases</h3><div class="skill-list"><span class="skill-item">PostgreSQL</span><span class="skill-item">MySQL</span><span class="skill-item">MongoDB</span></div></div>
+    <div class="skill-category"><h3>Cloud & DevOps</h3><div class="skill-list"><span class="skill-item">AWS (ECS/Fargate)</span><span class="skill-item">Lambda</span><span class="skill-item">Step Functions</span><span class="skill-item">CloudWatch</span><span class="skill-item">SNS</span><span class="skill-item">Docker</span><span class="skill-item">Terraform</span><span class="skill-item">CI/CD</span></div></div>
+  </div>
+</section>
 
-            <div class="skill-category">
-                <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
-                <div class="skill-list">
-                    <span class="skill-item">AWS</span>
-                    <span class="skill-item">Docker</span>
-                    <span class="skill-item">CI/CD</span>
-                    <span class="skill-item">GitHub Actions</span>
-                    <span class="skill-item">Terraform</span>
-                </div>
-            </div>
+<section id="contact" class="contact-section">
+  <h2 class="section-title">Get in Touch</h2>
+  <p class="section-subtitle">Currently open to new opportunities</p>
+  <p style="text-align:center"><a href="mailto:mariem.amor33@gmail.com">mariem.amor33@gmail.com</a> · Berlin, Germany</p>
+</section>
 
-            <div class="skill-category">
-                <h3><i class="fas fa-vial"></i> Testing</h3>
-                <div class="skill-list">
-                    <span class="skill-item">Jest</span>
-                    <span class="skill-item">Mocha</span>
-                    <span class="skill-item">Chai</span>
-                    <span class="skill-item">Cypress</span>
-                    <span class="skill-item">Postman</span>
-                </div>
-            </div>
+<footer>
+  <p>© 2025 Mariem Amor</p>
+</footer>
 
-            <div class="skill-category">
-                <h3><i class="fas fa-tools"></i> Tools & Methodologies</h3>
-                <div class="skill-list">
-                    <span class="skill-item">Git/GitHub</span>
-                    <span class="skill-item">Jira</span>
-                    <span class="skill-item">Trello</span>
-                    <span class="skill-item">Agile Scrum</span>
-                    <span class="skill-item">Socket.IO</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact-section" id="contact">
-        <div class="contact-container">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">I'm currently looking for new opportunities. Feel free to reach out!</p>
-            
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope contact-icon"></i>
-                    <a href="mailto:mariem.amor33@gmail.com" class="contact-link">mariem.amor33@gmail.com</a>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt contact-icon"></i>
-                    <span class="contact-link">Elsa-Neumann-str. 49, Berlin</span>
-                </div>
-            </div>
-
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/mariem-amor/" target="_blank" class="social-link" title="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://github.com/mariemamor" target="_blank" class="social-link" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Mariem Amor. Built with passion and dedication.</p>
-    </footer>
-
-    <script>
-        // Gallery data
-        const galleries = {
-            'fastuz': {
-                title: 'Fastuz E-Learning Platform',
-                images: [
-                    { src: 'images/fastuz-1.jpg', caption: 'Home Page' },
-                    { src: 'images/fastuz-2.jpg', caption: 'Welcome & Mission' },
-                    { src: 'images/fastuz-3.jpg', caption: 'Course Categories' },
-                    { src: 'images/fastuz-4.jpg', caption: 'Community Testimonials' }
-                ]
-            },
-            'fastuz-hub': {
-                title: 'Fastuz-Hub Education Management',
-                images: [
-                    { src: 'images/hub-1.jpg', caption: 'Login Interface' },
-                    { src: 'images/hub-2.jpg', caption: 'Admin Dashboard' },
-                    { src: 'images/hub-3.jpg', caption: 'Analytics & Reports' }
-                ]
-            },
-            'vaccination': {
-                title: 'Vaccination Platform',
-                images: [
-                    { src: 'images/vaccination-1.jpg', caption: 'Platform Overview' },
-                    { src: 'images/vaccination-2.jpg', caption: 'Certificate Generation' },
-                    { src: 'images/vaccination-3.jpg', caption: 'Live Detection' },
-                    { src: 'images/vaccination-4.jpg', caption: 'User Dashboard' }
-                ]
-            },
-            'erp': {
-                title: 'ERP Platform',
-                images: [
-                    { src: 'images/erp-1.jpg', caption: 'Dashboard Overview' },
-                    { src: 'images/erp-2.jpg', caption: 'Role Management' },
-                    { src: 'images/erp-3.jpg', caption: 'Analytics & Reports' }
-                ]
-            }
-        };
-
-        // Mobile menu toggle
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
-
-        // Modal/Lightbox functions
-        function openModal(imageSrc, caption) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            const modalCaption = document.getElementById('modalCaption');
-            
-            modal.style.display = 'block';
-            modalImg.src = imageSrc;
-            modalCaption.textContent = caption || '';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('imageModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Gallery functions
-        function showGallery(projectKey) {
-            const gallery = galleries[projectKey];
-            if (!gallery) return;
-
-            const modal = document.getElementById('galleryModal');
-            const title = document.getElementById('galleryTitle');
-            const grid = document.getElementById('galleryGrid');
-
-            title.textContent = gallery.title;
-            grid.innerHTML = '';
-
-            gallery.images.forEach(img => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                item.onclick = () => openModal(img.src, img.caption);
-                
-                const image = document.createElement('img');
-                image.src = img.src;
-                image.alt = img.caption;
-                
-                item.appendChild(image);
-                grid.appendChild(item);
-            });
-
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeGallery() {
-            const modal = document.getElementById('galleryModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            const imageModal = document.getElementById('imageModal');
-            const galleryModal = document.getElementById('galleryModal');
-            
-            if (event.target === imageModal) {
-                closeModal();
-            }
-            if (event.target === galleryModal) {
-                closeGallery();
-            }
-        }
-
-        // Close modals with Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-                closeGallery();
-            }
-        });
-
-        // Smooth scroll and close mobile menu
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const navLinks = document.getElementById('navLinks');
-                navLinks.classList.remove('active');
-                
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
-        });
-    </script>
 </body>
 </html>
